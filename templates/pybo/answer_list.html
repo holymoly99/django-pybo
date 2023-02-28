@@ -19,6 +19,8 @@
             <div>{{question.create_date}}</div>
           </div>
         </div>
+
+
         {% if request.user == answer.author %}
         <div class="card-footer py-2">
           <a href="{% url 'pybo:answer_modify' answer.id %}" class="btn btn-sm btn-outline-secondary text-info">수정</a>
