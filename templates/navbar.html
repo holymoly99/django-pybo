@@ -10,7 +10,7 @@
       <li class="nav-item ">
         {% if user.is_authenticated %}
         <a class="nav-link" href="{% url 'common:logout' %}">
-          {% avarta user.id %}
+          {% avatar user.id %}
           {{ user.username }} (로그아웃)</a>
         {% else %}
         <li>

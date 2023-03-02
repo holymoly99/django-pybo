@@ -10,9 +10,9 @@ def mark(value):
     return mark_safe(markdown.markdown(value, extensions=extension))
 
 @register.simple_tag()
-def avarta(uid):
-    tag = f'<img class="avarta" src="https://randomuser.me/api/portraits/men/{uid}.jpg"/>'
+def avatar(uid):
+    tag = f'<img class="avatar" src="https://randomuser.me/api/portraits/men/{uid}.jpg"/>'
     return mark_safe(tag)
 
 
-# {% avarta user.id %}
+# {% avatar user.id %}
