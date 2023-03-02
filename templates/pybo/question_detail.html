@@ -1,4 +1,6 @@
 {% extends 'base.html' %}
+{% load pybo_filter %}
+
 {% block content %}
 
   {% load static %}
@@ -16,7 +18,7 @@
     </div>
 
     {% endif %}
-    <h2 class="border-bottom py-2">{{ question.subject}}</h2>
+    <h2 class="border-bottom py-2">{{ question.subject }}</h2>
     {% csrf_token %}
     {% if form.errors %}
       <div class="alert alert-danger" role="alert">
@@ -30,23 +32,26 @@
     {% endif %}
 
     <div class="card my-3">
-        <div class="card-body">{{question.content}}</div>
+        <div class="card-body">{{ question.content|mark }}</div>
 
         <div class="d-flex justify-content-end">
 
           <!-- 글 수정 시 수정일 표시 -->
           {% if question.modify_date %}
           <div class="badge badge-light p-2 text-left mx-3">
-              <div class="mb-2">수정일</div>
+              <div class="mb-2">최근 수정일</div>
               <div>
-                {{ question.modify_date | date:'Y-m-d H:i' }}
+                {{ question.modify_date | date:'y-m-d H:i' }}
               </div>
           </div>
           {% endif %}
 
           <div class="badge badge-success p-2 text-left">
-            <div class="mb-2">{{ question.author.username }}</div>
-            <div>{{question.create_date}}</div>
+            <div class="mb-2">
+              <img class="avarta-sm" src="https://randomuser.me/api/portraits/men/{{question.author.id}}.jpg"/>
+              {{ question.author.username }}
+            </div>
+            <div>{{question.create_date | date:'Y-m-d H:i'}}</div>
           </div>
         </div>
 
@@ -59,17 +64,19 @@
         </div>
         {% endif %}
     </div>
-    
+
     {% include 'pybo/answer_list.html' %}
 
     {% include 'pybo/answer_create_form.html' %}
-
   </div>
+
+
 {% endblock content %}
 
 
+
 {% block script %}
-<script>
+{% comment %} <script>
 $(document).ready(function(){
 
     $(".delete").on('click', function() {
@@ -79,5 +86,19 @@ $(document).ready(function(){
         }
     });
 });
-</script>
+</script> {% endcomment %}
+    <script>
+      $(document).ready(function () {
+        console.log('로딩 완료');
+        let btns = $('.delete'); // 변수 선언 키워드 let
+        btns.on('click', function () {
+          console.log('click 발생');
+          let answer = confirm('정말 삭제할까요?');
+          if (answer) {
+            location.href = $(this).data('uri');
+          }
+        });
+        console.log('click 이벤트 핸들러 등록 완료');
+      });
+    </script>
 {% endblock %}

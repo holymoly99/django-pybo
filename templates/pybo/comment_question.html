@@ -1,11 +1,14 @@
 <!-- 댓글 내역 -->
 <!-- 질문 댓글 Start -->
-    <div class="mx-3">
+
       {% if question.comment_set.count > 0 %}
       <div class="mt-3">
       {% for comment in question.comment_set.all %}
+        <a name="cooment_{{comment.id}}"></a>
         <div class="comment py-1 text-muted">
+
           {% include 'pybo/comment_answer.html' %}
+          
           <span style="white-space: pre-line;"><b>{{ comment.content }}</b></span>
           <span>
             -{{ comment.author }} [{{ comment.create_date | date:'y-m-d H:i' }}]
@@ -21,9 +24,8 @@
       {% endfor %}
       </div>
       {% endif %}
-      <div class="mb-2">
+      <div class="m-3">
           <a href="{% url 'pybo:comment_create_question' question.id %}" class="small"><small>댓글 추가 ..</small></a>
 
       </div>
-    </div>
           <!-- 질문 댓글 End -->

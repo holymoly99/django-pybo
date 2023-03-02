@@ -3,24 +3,24 @@
 <html lang="ko">
 
   <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hello, pybo!</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css" integrity="sha512-SzlrxWUlpfuzQ+pcUCosxcglQRNAq/DZjVsC0lE40xsADsfeQoEypE+enwcOiGjk/bSuGGKHEyjSoQ1zVisanQ==" crossorigin="anonymous" referrerpolicy="no-referrer"/>
   <link rel="stylesheet" type="text/css" href="{% static 'bootstrap.min.css' %}">
   <link rel="stylesheet" type="text/css" href="{% static 'style.css' %}">
-  <title>Hello, pybo!</title>
   </head>
 
   <body>
     {% include "navbar.html" %}
     <div class="container mv-3">
       <!-- 기본 템플릿 안에 삽입될 내용 Start -->
-    {% block content %}
-    {% endblock %}
+    {% block content %}{% endblock %}
       <!-- 기본 템플릿 안에 삽입될 내용 End -->
     </div>
     <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.3/dist/jquery.slim.min.js"></script>
     <script src="{% static 'bootstrap.min.js' %}"></script>
-
     {% block script %}{% endblock script %}
   </body>
 </html>

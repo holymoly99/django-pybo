@@ -1,4 +1,4 @@
-from django.shortcuts import render, get_object_or_404, redirect
+from django.shortcuts import render, get_object_or_404, redirect, resolve_url
 from ..models import Question, Answer
 from django.utils import timezone
 from ..forms import QuestionForm, AnswerForm
@@ -19,19 +19,20 @@ def answer_create(request, question_id):
             answer.create_date = timezone.now()
             answer.question = question # Foreign Key
             answer.save()
-            return redirect('pybo:detail', question_id=question.id)
+            # 앵커 #answer_7 추가
+            url = resolve_url('pybo:detail', question_id=question.id)
+            # url = url + f'#answer_{answer.id}' 도 같음
+            return redirect(f"{url}#answer_{answer.id}")
     else: # get 방식일 때
-        form = QuestionForm()
+        form = AnswerForm()
     context = {'question':question, 'form':form}
     return render(request, 'pybo/question_detail.html', context)
 
 
-
 @login_required(login_url='common:login')
 def answer_modify(request, answer_id):
-    """
-    pybo 답변수정
-    """
+    """pybo 답변수정"""
+
     answer = get_object_or_404(Answer, pk=answer_id)
     if request.user != answer.author:
         messages.error(request, "수정권한이 없습니다")
@@ -44,19 +45,18 @@ def answer_modify(request, answer_id):
             answer.author = request.user
             answer.modify_date = timezone.now()
             answer.save()
-            return redirect('pybo:detail', question_id=answer.question.id)
+            url = resolve_url('pybo:detail', question_id=answer.question.id)
+            url += url + f'#answer_{answer.id}'
+            return redirect(url)
     else:
         form = AnswerForm(instance=answer)
-            
     context = {'answer' : answer, 'form' : form}
-
     return render(request, 'pybo/answer_form.html', context)
 
 @login_required(login_url='common:login')
 def answer_delete(request, answer_id):
-    """
-    pybo 답변삭제
-    """
+    """pybo 답변삭제"""
+
     answer = get_object_or_404(Answer, pk=answer_id)
     if request.user != answer.author:
         messages.error(request, "삭제권한이 없습니다")

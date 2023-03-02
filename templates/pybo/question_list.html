@@ -2,9 +2,8 @@
 {% load pybo_filter %}
 
 {% block content %}
-
   <div class="container my-3">
-    <table class="table">
+    <table class="table table-hover">
       <thead>
         <tr class="table-dark">
           <th style="width:60px">번호</th>
@@ -23,12 +22,13 @@
               <td>
                 <a href="{% url 'pybo:detail' question.id %}">
                   {{ question.subject }}
-                </a>
-                {% if question.answer_set.count > 0 %}
+                {% if question.answer_set.count %}
                   <span class="text-danger small ml-2">
+                    <i class="fa-regular fa-comment-dots"></i>
                     {{ question.answer_set.count }}
                   </span>
                 {% endif %}
+                </a>
               </td>
               <td>
                 {{ question.author.username }}

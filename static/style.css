@@ -10,9 +10,19 @@
 
 .avarta {
     width: 30px;
-    height: 40px;
-    border-radius: 30%;
+    height: 30px;
+    border-radius: 50%;
     margin-right: 10px;
+}
+
+.avarta-sm {
+    width: 15px;
+    height: 15px;
+    border-radius: 50%;
+}
+
+.auth-from {
+    width: 100%;
 }
 
 .comment {
@@ -20,6 +30,7 @@
     font-size: 0.7em;
 }
 
+/* width가 540이상이면 */
 @media(min-width:540px) {
     .auth-form {
         width:540px;
