@@ -1,7 +1,18 @@
+import markdown
 from django import template
+from django.utils.safestring import mark_safe
 
 register = template.Library()
 
-@register.filter
-def sub(value, arg):
-    return value - arg
+@register.filter()
+def mark(value):
+    extension = ['nl2br', 'fenced_code']
+    return mark_safe(markdown.markdown(value, extensions=extension))
+
+@register.simple_tag()
+def avatar(uid):
+    tag = f'<img class="avatar" src="https://randomuser.me/api/portraits/men/{uid}.jpg"/>'
+    return mark_safe(tag)
+
+
+# {% avatar user.id %}
